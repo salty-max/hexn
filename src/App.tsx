@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Box, Text} from 'ink';
 import fs from 'fs/promises';
 import path from 'path';
 import HexView from './components/HexView.js';
+import {useBuffer} from './hooks/useBuffer.js';
+import {useMovement} from './hooks/useMovement.js';
 
 interface AppProps {
 	filePath?: string;
@@ -13,9 +15,10 @@ const App = ({filePath}: AppProps) => {
 		return <Text color="red">No file path provided</Text>;
 	}
 
-	const [buffer, setBuffer] = useState(new Uint8Array(0));
+	const {buffer, setBuffer, cursor, setCursor} = useBuffer();
 
 	const getFile = async () => {
+		// TODO: handle absolute paths
 		const file = await fs.readFile(path.join(process.cwd(), filePath));
 		setBuffer(new Uint8Array(file.buffer));
 	};
@@ -24,9 +27,11 @@ const App = ({filePath}: AppProps) => {
 		getFile();
 	}, []);
 
+	useMovement({buffer, cursor, setCursor, isEnabled: true});
+
 	return (
 		<Box flexDirection="column">
-			<HexView buffer={buffer} />
+			<HexView buffer={buffer} cursor={cursor} />
 		</Box>
 	);
 };

@@ -7,14 +7,17 @@ import {Ascii} from './Ascii.js';
 
 interface HexViewProps {
 	buffer: Uint8Array;
+	cursor: number;
 }
 
-const HexView = ({buffer}: HexViewProps) => {
+const HexView = ({buffer, cursor}: HexViewProps) => {
 	const lines: React.JSX.Element[] = [];
 	for (let offset = 0; offset < buffer.length; offset += BYTES_PER_LINE) {
 		const slice = [...buffer.slice(offset, offset + BYTES_PER_LINE)];
 		const bytes = slice.map((byte, i) => {
-			return <Byte key={offset + i} byte={byte} />;
+			return (
+				<Byte key={offset + i} byte={byte} isSelected={offset + i === cursor} />
+			);
 		});
 
 		lines.push(
