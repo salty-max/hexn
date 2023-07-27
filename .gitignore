@@ -1,4 +1,4 @@
 node_modules
-dist
+bin
 yarn-error.log
 .DS_Store

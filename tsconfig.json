@@ -1,7 +1,7 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"outDir": "dist"
+		"outDir": "bin"
 	},
 	"include": ["src"],
 	"exclude": ["node_modules", "dist", "**/*.spec.ts"]

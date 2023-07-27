@@ -10,20 +10,19 @@ const cli = meow(
 	  $ hexn
 
 	Options
-		--name  Your name
+		--file  File to edit
 
 	Examples
-	  $ hexn --name=Jane
-	  Hello, Jane
+	  $ hexn --file=./bytes.bin
 `,
 	{
 		importMeta: import.meta,
 		flags: {
-			name: {
+			file: {
 				type: 'string',
 			},
 		},
 	},
 );
 
-render(<App name={cli.flags.name} />);
+render(<App filePath={cli.flags.file} />);
