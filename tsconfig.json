@@ -1,8 +1,9 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"outDir": "bin"
+		"outDir": "bin",
+		"jsx": "react"
 	},
 	"include": ["src"],
-	"exclude": ["node_modules", "dist", "**/*.spec.ts"]
+	"exclude": ["node_modules", "bin", "**/*.spec.ts"]
 }

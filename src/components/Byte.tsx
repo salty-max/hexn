@@ -8,9 +8,7 @@ interface ByteProps {
 
 export const Byte = ({byte}: ByteProps) => (
 	<Box>
-		<Text color="green" dimColor>
-			{toHex(byte, 2)}
-		</Text>
+		<Text>{toHex(byte, 2)}</Text>
 	</Box>
 );
 

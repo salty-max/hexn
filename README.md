@@ -1,4 +1,5 @@
 # HEXN
+
 A CLI tool to mess with bytes. Powered by React and Typescript.
 
 ## Install
