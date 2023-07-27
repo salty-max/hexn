@@ -30,9 +30,6 @@
 	},
 	"devDependencies": {
 		"@ava/typescript": "^4.1.0",
-		"@babel/preset-env": "^7.22.9",
-		"@babel/preset-react": "^7.22.5",
-		"@babel/preset-typescript": "^7.22.5",
 		"@sindresorhus/tsconfig": "^3.0.1",
 		"@types/node": "^20.4.5",
 		"@types/react": "^18.0.32",
@@ -59,7 +56,7 @@
 			"rewritePaths": {
 				"src/": "bin/"
 			},
-			"compile": false
+			"compile": "tsc"
 		}
 	},
 	"prettier": "@vdemedes/prettier-config"
