@@ -7,7 +7,8 @@ const isHexChar = (char: string) => hexRegex.test(char);
 interface ByteEditProps {
 	cursor: number;
 	buffer: Uint8Array;
-	setBuffer: React.Dispatch<React.SetStateAction<Uint8Array>>;
+	setBuffer: (buffer: Uint8Array) => void;
+	moveCursorRight: () => void;
 	isEnabled?: boolean;
 }
 
@@ -15,6 +16,7 @@ export const useByteEdit = ({
 	cursor,
 	buffer,
 	setBuffer,
+	moveCursorRight,
 	isEnabled,
 }: ByteEditProps) => {
 	const [isMSN, setIsMSN] = useState(true); // Most Significant Nibble
@@ -29,6 +31,7 @@ export const useByteEdit = ({
 					newBuffer[cursor] = (value << 4) | (newBuffer[cursor]! & 0x0f);
 				} else {
 					newBuffer[cursor] = (newBuffer[cursor]! & 0xf0) | value;
+					moveCursorRight();
 				}
 
 				setBuffer(newBuffer);

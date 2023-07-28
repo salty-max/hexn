@@ -1,40 +1,31 @@
 import {Key, useInput} from 'ink';
-import {BYTES_PER_LINE} from '../utils.js';
+import {CursorCommands} from './useBuffer.js';
 
 interface MovementProps {
-	cursor: number;
-	setCursor: React.Dispatch<React.SetStateAction<number>>;
-	buffer: Uint8Array;
+	cursorCommands: CursorCommands;
 	isEnabled?: boolean;
 }
 
 export const handleKey = (
 	key: Partial<Key>,
-	cursor: number,
-	setCursor: React.Dispatch<React.SetStateAction<number>>,
-	buffer: Uint8Array,
+	cursorCommands: CursorCommands,
 ) => {
 	if (key.leftArrow) {
-		setCursor(Math.max(0, cursor - 1));
+		cursorCommands.left();
 	}
 	if (key.rightArrow) {
-		setCursor(Math.min(cursor + 1, buffer.byteLength - 1));
+		cursorCommands.right();
 	}
 	if (key.upArrow) {
-		setCursor(Math.max(cursor - BYTES_PER_LINE, 0));
+		cursorCommands.up();
 	}
 	if (key.downArrow) {
-		setCursor(Math.min(cursor + BYTES_PER_LINE, buffer.byteLength - 1));
+		cursorCommands.down();
 	}
 };
 
-export const useMovement = ({
-	cursor,
-	setCursor,
-	buffer,
-	isEnabled,
-}: MovementProps) => {
-	useInput((_, key) => handleKey(key, cursor, setCursor, buffer), {
+export const useMovement = ({cursorCommands, isEnabled}: MovementProps) => {
+	useInput((_, key) => handleKey(key, cursorCommands), {
 		isActive: isEnabled,
 	});
 };
