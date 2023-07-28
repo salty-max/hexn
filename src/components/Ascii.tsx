@@ -1,6 +1,7 @@
-import {Box, Text} from 'ink';
+import {Box} from 'ink';
 import React from 'react';
 import {BYTES_PER_LINE} from '../utils.js';
+import {ColoredText} from './ColoredText.js';
 
 interface AsciiProps {
 	bytes: number[];
@@ -8,7 +9,7 @@ interface AsciiProps {
 
 export const Ascii = ({bytes}: AsciiProps) => (
 	<Box>
-		<Text>
+		<ColoredText>
 			{'|'}
 			{bytes
 				.map(byte => {
@@ -19,6 +20,6 @@ export const Ascii = ({bytes}: AsciiProps) => (
 				.join('')
 				.padEnd(BYTES_PER_LINE, '.')}
 			{'|'}
-		</Text>
+		</ColoredText>
 	</Box>
 );

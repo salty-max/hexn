@@ -11,7 +11,8 @@ const cli = meow(
 	  $ hexn
 
 	Options
-		--file  File to edit
+		--file | -f  File to edit
+		--matrix | -m  Enter the matrix
 
 	Examples
 	  $ hexn --file=./bytes.bin
@@ -21,13 +22,18 @@ const cli = meow(
 		flags: {
 			file: {
 				type: 'string',
+				alias: 'f',
+			},
+			matrix: {
+				type: 'boolean',
+				alias: 'm',
 			},
 		},
 	},
 );
 
 render(
-	<AppStateProvider>
+	<AppStateProvider isMatrix={cli.flags.matrix}>
 		<App filePath={cli.flags.file} />
 	</AppStateProvider>,
 );

@@ -18,9 +18,8 @@ $ hexn --help
     $ hexn
 
   Options
-    --name  Your name
+    --file  File to edit
 
   Examples
-    $ hexn --name=Jane
-    Hello, Jane
+    $ hexn --file=./example.bin
 ```

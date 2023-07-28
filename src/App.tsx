@@ -9,6 +9,7 @@ import {useEdit} from './hooks/useEdit.js';
 import {Mode, useAppState} from './hooks/useAppState.js';
 import {Footer} from './components/Footer.js';
 import {HelpScreen} from './components/HelpScreen.js';
+import {Header} from './components/Header.js';
 
 interface AppProps {
 	filePath?: string;
@@ -19,7 +20,7 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 		return <Text color="red">No file path provided</Text>;
 	}
 
-	const {mode, setMode} = useAppState();
+	const {mode, setMode, theme, setTheme} = useAppState();
 
 	const {
 		buffer,
@@ -33,7 +34,7 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 
 	const getFile = async () => {
 		const file = await fs.readFile(
-			path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath),
+			path.isAbsolute(filePath) ? filePath : path.resolve(filePath),
 		);
 		bufferCommands.insertAtCursor(new Uint8Array(file.buffer));
 	};
@@ -57,13 +58,16 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 		<HelpScreen exit={() => setMode(Mode.Edit)} />
 	) : (
 		<Box flexDirection="column">
+			<Header filepath={filePath} />
 			<HexView buffer={buffer} cursor={cursor} offset={offset} />
 			<Footer
-				mode={mode}
 				outputPath={filePath}
 				buffer={buffer}
 				cursor={cursor}
+				mode={mode}
 				setMode={setMode}
+				theme={theme}
+				setTheme={setTheme}
 				jumpToOffset={jumpToOffset}
 			/>
 		</Box>

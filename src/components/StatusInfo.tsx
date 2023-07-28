@@ -1,6 +1,7 @@
 import React from 'react';
-import {Box, Text} from 'ink';
-import {HEXVIEW_W, toHex} from '../utils.js';
+import {Box} from 'ink';
+import {toHex} from '../utils.js';
+import {ColoredText} from './ColoredText.js';
 
 interface StatusInfoProps {
 	buffer: Uint8Array;
@@ -9,18 +10,22 @@ interface StatusInfoProps {
 
 export const StatusInfo = ({buffer, cursor}: StatusInfoProps) => {
 	return (
-		<Box width={HEXVIEW_W} paddingX={2} justifyContent="space-between">
+		<Box justifyContent="space-between">
 			<Box>
-				<Box marginRight={1}>
-					<Text>
-						Offset [<Text bold>{toHex(cursor, 8)}</Text>]
-					</Text>
+				<Box>
+					<ColoredText>
+						Offset [<ColoredText bold>{toHex(cursor, 8)}</ColoredText>]
+					</ColoredText>
 				</Box>
-				<Text>({buffer.byteLength === 0 ? '-' : buffer[cursor]})</Text>
+				<ColoredText>
+					({buffer.byteLength === 0 ? '-' : buffer[cursor]})
+				</ColoredText>
 			</Box>
-			<Text>
-				[<Text bold>?</Text>]&nbsp;Help
-			</Text>
+			<Box>
+				<ColoredText>
+					[<ColoredText bold>?</ColoredText>]&nbsp;Help
+				</ColoredText>
+			</Box>
 		</Box>
 	);
 };

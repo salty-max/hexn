@@ -1,11 +1,15 @@
 import React from 'react';
-import {Box, Text, useInput} from 'ink';
+import {Box, useInput} from 'ink';
+import {SCREEN_H, SCREEN_W} from '../utils.js';
+import {useAppState} from '../hooks/useAppState.js';
+import {ColoredText} from './ColoredText.js';
 
 interface HelpScreenProps {
 	exit: () => void;
 }
 
 export const HelpScreen = ({exit}: HelpScreenProps) => {
+	const {theme} = useAppState();
 	useInput((_, key) => {
 		if (key.escape) exit();
 	});
@@ -18,6 +22,7 @@ export const HelpScreen = ({exit}: HelpScreenProps) => {
 		['I', 'Insert a zero byte after the cursor'],
 		['j', 'Jump to specified offset'],
 		['Ctrl + s', 'Save file'],
+		['t', 'Change theme (blue, red, green, yellow, magenta, cyan, white)'],
 		['Esc', 'Exit any mode'],
 		['?', 'Show help'],
 	];
@@ -25,21 +30,23 @@ export const HelpScreen = ({exit}: HelpScreenProps) => {
 	return (
 		<Box
 			flexDirection="column"
-			height={25}
-			width={80}
+			height={SCREEN_H}
+			width={SCREEN_W}
 			borderStyle="doubleSingle"
+			borderDimColor
+			borderColor={theme}
 			paddingX={1}
 		>
 			<Box marginBottom={2}>
-				<Text bold>Hexn :: Help</Text>
+				<ColoredText bold>Hexn :: Help</ColoredText>
 			</Box>
 
 			{helpItems.map(([key, description]) => (
 				<Box key={key}>
 					<Box minWidth={25}>
-						<Text bold>{key}</Text>
+						<ColoredText bold>{key}</ColoredText>
 					</Box>
-					<Text>{description}</Text>
+					<ColoredText>{description}</ColoredText>
 				</Box>
 			))}
 		</Box>

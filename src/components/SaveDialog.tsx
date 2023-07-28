@@ -1,5 +1,6 @@
 import React from 'react';
 import * as fs from 'fs/promises';
+import path from 'path';
 import {Mode} from '../hooks/useAppState.js';
 import {InputField} from './InputField.js';
 
@@ -14,9 +15,9 @@ export const SaveDialog = ({buffer, setMode, outputPath}: SaveDialogProps) => {
 		<InputField
 			label="Save to: "
 			initialValue={outputPath}
-			onEnter={async path => {
+			onEnter={async filePath => {
 				try {
-					await fs.writeFile(path, buffer);
+					await fs.writeFile(path.resolve(filePath), buffer);
 					setMode(Mode.Edit);
 				} catch (error) {
 					console.error(error);

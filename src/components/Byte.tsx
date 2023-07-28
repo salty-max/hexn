@@ -1,6 +1,7 @@
 import {Box, Text} from 'ink';
 import React from 'react';
 import {toHex} from '../utils.js';
+import {useAppState} from '../hooks/useAppState.js';
 
 interface ByteProps {
 	byte: number;
@@ -9,12 +10,14 @@ interface ByteProps {
 }
 
 export const Byte = ({byte, index, isSelected}: ByteProps) => {
+	const {theme} = useAppState();
 	const spacing = (index + 1) % 4 === 0 ? '  ' : ' ';
 	return (
 		<Box>
 			<Text
-				backgroundColor={isSelected ? 'white' : 'black'}
-				color={isSelected ? 'black' : 'white'}
+				backgroundColor={isSelected ? theme : 'black'}
+				color={isSelected ? 'black' : theme}
+				bold={isSelected}
 			>
 				{toHex(byte, 2)}
 			</Text>

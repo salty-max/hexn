@@ -5,32 +5,38 @@ export enum Mode {
 	Save,
 	Help,
 	Jump,
+	Theme,
 }
 
 interface AppState {
 	mode: Mode;
+	theme: string;
 }
 
 interface AppStateContextProps {
 	mode: Mode;
+	theme: string;
 	setMode: (mode: Mode) => void;
+	setTheme: (theme: string) => void;
 }
 
 interface AppStateProviderProps {
+	isMatrix?: boolean;
 	children: React.ReactNode;
 }
-
-const initialState: AppState = {
-	mode: Mode.Edit,
-};
 
 const AppStateContext = React.createContext<AppStateContextProps | null>(null);
 
 export const AppStateProvider: React.FC<AppStateProviderProps> = ({
+	isMatrix,
 	children,
 }) => {
-	const [state, setState] = React.useState<AppState>(initialState);
+	const [state, setState] = React.useState<AppState>({
+		mode: Mode.Edit,
+		theme: isMatrix ? 'green' : 'white',
+	});
 
+	const setTheme = (theme: string) => setState(prev => ({...prev, theme}));
 	const setMode = (mode: Mode) => setState(prev => ({...prev, mode}));
 
 	return (
@@ -38,6 +44,8 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
 			value={{
 				mode: state.mode,
 				setMode,
+				theme: state.theme,
+				setTheme,
 			}}
 		>
 			{children}

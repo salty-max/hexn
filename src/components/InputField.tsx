@@ -1,5 +1,7 @@
 import {useInput, Text, Box} from 'ink';
 import React from 'react';
+import {ColoredText} from './ColoredText.js';
+import {useAppState} from '../hooks/useAppState.js';
 
 interface InputFieldProps {
 	onEnter?: (value: string) => void | Promise<void>;
@@ -20,6 +22,8 @@ export const InputField: React.FC<InputFieldProps> = ({
 }: InputFieldProps) => {
 	const [value, setValue] = React.useState(initialValue);
 	const [cursor, setCursor] = React.useState(initialValue.length);
+
+	const {theme} = useAppState();
 
 	useInput((input, key) => {
 		if (key.escape) return onEscape(value);
@@ -68,21 +72,21 @@ export const InputField: React.FC<InputFieldProps> = ({
 	const textComponents = value.split('').map((char, i) => {
 		if (i === cursor) {
 			return (
-				<Text key={`${char}_${i}`} backgroundColor="white" color="black">
+				<Text key={`${char}_${i}`} backgroundColor={theme} color="black">
 					{char}
 				</Text>
 			);
 		}
 
-		return <Text key={`${char}_${i}`}>{char}</Text>;
+		return <ColoredText key={`${char}_${i}`}>{char}</ColoredText>;
 	});
 
 	return (
 		<Box>
-			<Text>{label}</Text>
+			<ColoredText>{label}</ColoredText>
 			<Box>{textComponents}</Box>
 			{cursor === value.length ? (
-				<Text backgroundColor="white" color="black">
+				<Text backgroundColor={theme} color="black">
 					{' '}
 				</Text>
 			) : null}

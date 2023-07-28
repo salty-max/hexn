@@ -62,6 +62,10 @@ export const useEdit = ({
 				return setMode(Mode.Jump);
 			}
 
+			if (input === 't') {
+				return setMode(Mode.Theme);
+			}
+
 			if (key.delete || key.backspace) {
 				bufferCommands.delete();
 				setIsMSN(true);
