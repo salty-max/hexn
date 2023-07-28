@@ -14,7 +14,7 @@
 		"build": "tsc && chmod +x ./bin/index.js",
 		"dev": "tsc --watch",
 		"hexn": "node bin --file example.bin",
-		"gen": "node bin/generate-bin.js 512 example.bin",
+		"gen": "node bin/generate-bin.js 27 example.bin",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
 		"fmt": "prettier --write src",

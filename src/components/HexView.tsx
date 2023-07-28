@@ -1,6 +1,6 @@
-import {Box} from 'ink';
+import {Box, Text} from 'ink';
 import React from 'react';
-import {BYTES_PER_LINE, HEXVIEW_H} from '../utils.js';
+import {BYTES_PER_LINE, HEXVIEW_H, HEXVIEW_W} from '../utils.js';
 import {Byte, Bytes} from './Byte.js';
 import {Offset} from './Offset.js';
 import {Ascii} from './Ascii.js';
@@ -25,11 +25,27 @@ const HexView = ({buffer, cursor, offset: startOffset}: HexViewProps) => {
 			);
 		});
 
+		if (bytes.length < BYTES_PER_LINE) {
+			const missing = BYTES_PER_LINE - bytes.length;
+			for (let i = 0; i < missing; i++) {
+				bytes.push(
+					<Box key={`padding-${i}`}>
+						<Text>{'  '}</Text>
+					</Box>,
+				);
+			}
+		}
+
 		lines.push(
-			<Box key={offset} columnGap={2}>
+			<Box
+				key={offset}
+				columnGap={2}
+				width={HEXVIEW_W}
+				justifyContent="space-between"
+			>
 				<Offset offset={offset} />
 				<Bytes bytes={bytes} />
-				<Ascii bytes={slice} offset={offset} />
+				<Ascii bytes={slice} />
 			</Box>,
 		);
 	}

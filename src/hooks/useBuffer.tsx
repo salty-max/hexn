@@ -61,35 +61,41 @@ export const useBuffer = () => {
 		newBuffer.set(buffer.slice(cursor + 1), cursor);
 
 		setBuffer(newBuffer);
-		setCursor(Math.min(newSize, cursor));
+		setCursor(Math.max(0, Math.min(newSize - 1, cursor)));
 	};
 
 	const cursorCommands: CursorCommands = {
 		left: () => {
+			if (buffer.byteLength === 0) return;
 			const newCursor = Math.max(0, cursor - 1);
 			setCursor(newCursor);
 
 			if (!isCursorVisible(newCursor, offset)) {
-				setOffset(offset - BYTES_PER_LINE);
+				setOffset(Math.max(0, offset - BYTES_PER_LINE));
 			}
 		},
 		right: () => {
+			if (buffer.byteLength === 0) return;
 			const newCursor = Math.min(buffer.byteLength - 1, cursor + 1);
 			setCursor(newCursor);
 
 			if (!isCursorVisible(newCursor, offset)) {
-				setOffset(offset + BYTES_PER_LINE);
+				setOffset(
+					Math.min(Math.max(0, buffer.byteLength - 1), offset + BYTES_PER_LINE),
+				);
 			}
 		},
 		up: () => {
+			if (buffer.byteLength === 0) return;
 			const newCursor = Math.max(0, cursor - BYTES_PER_LINE);
 			setCursor(newCursor);
 
 			if (!isCursorVisible(newCursor, offset)) {
-				setOffset(offset - BYTES_PER_LINE);
+				setOffset(Math.max(0, offset - BYTES_PER_LINE));
 			}
 		},
 		down: () => {
+			if (buffer.byteLength === 0) return;
 			const newCursor = Math.min(
 				buffer.byteLength - 1,
 				cursor + BYTES_PER_LINE,
@@ -97,7 +103,9 @@ export const useBuffer = () => {
 			setCursor(newCursor);
 
 			if (!isCursorVisible(newCursor, offset)) {
-				setOffset(offset + BYTES_PER_LINE);
+				setOffset(
+					Math.min(Math.max(0, buffer.byteLength - 1), offset + BYTES_PER_LINE),
+				);
 			}
 		},
 	};

@@ -1,20 +1,24 @@
 import {Box, Text} from 'ink';
 import React from 'react';
+import {BYTES_PER_LINE} from '../utils.js';
 
 interface AsciiProps {
 	bytes: number[];
-	offset: number;
 }
 
-export const Ascii = ({bytes, offset}: AsciiProps) => (
+export const Ascii = ({bytes}: AsciiProps) => (
 	<Box>
-		<Text>{'|'}</Text>
-		{bytes.map((byte, i) => {
-			const char =
-				byte >= 0x20 && byte <= 0x7e ? String.fromCharCode(byte) : '.';
+		<Text>
+			{'|'}
+			{bytes
+				.map(byte => {
+					if (byte >= 0x20 && byte <= 0x7e) return String.fromCharCode(byte);
 
-			return <Text key={offset + i}>{char}</Text>;
-		})}
-		<Text>{'|'}</Text>
+					return '.';
+				})
+				.join('')
+				.padEnd(BYTES_PER_LINE, '.')}
+			{'|'}
+		</Text>
 	</Box>
 );
