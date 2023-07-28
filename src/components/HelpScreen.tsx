@@ -21,6 +21,10 @@ export const HelpScreen = ({exit}: HelpScreenProps) => {
 		['i', 'Insert a zero byte before the cursor'],
 		['I', 'Insert a zero byte after the cursor'],
 		['j', 'Jump to specified offset'],
+		[
+			'v',
+			'Switch the address display in the status line between hex and decimal',
+		],
 		['Ctrl + s', 'Save file'],
 		['t', 'Change theme (blue, red, green, yellow, magenta, cyan, white)'],
 		['Esc', 'Exit any mode'],
@@ -32,18 +36,20 @@ export const HelpScreen = ({exit}: HelpScreenProps) => {
 			flexDirection="column"
 			height={SCREEN_H}
 			width={SCREEN_W}
-			borderStyle="doubleSingle"
+			borderStyle="round"
 			borderDimColor
 			borderColor={theme}
 			paddingX={1}
 		>
 			<Box marginBottom={2}>
-				<ColoredText bold>Hexn :: Help</ColoredText>
+				<ColoredText>
+					<ColoredText bold>Hexn</ColoredText> v0.3.0 :: Help
+				</ColoredText>
 			</Box>
 
 			{helpItems.map(([key, description]) => (
-				<Box key={key}>
-					<Box minWidth={25}>
+				<Box key={key} marginBottom={0.25}>
+					<Box minWidth={30}>
 						<ColoredText bold>{key}</ColoredText>
 					</Box>
 					<ColoredText>{description}</ColoredText>

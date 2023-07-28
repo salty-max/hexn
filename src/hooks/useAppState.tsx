@@ -1,4 +1,5 @@
 import React from 'react';
+import {AddressMode} from '../utils.js';
 
 export enum Mode {
 	Edit,
@@ -13,15 +14,18 @@ interface AppState {
 	mode: Mode;
 	error: string;
 	theme: string;
+	addressMode: AddressMode;
 }
 
 interface AppStateContextProps {
 	mode: Mode;
 	theme: string;
 	error: string;
+	addressMode: AddressMode;
 	setMode: (mode: Mode) => void;
 	setTheme: (theme: string) => void;
 	setError: (error: string) => void;
+	setAddressMode: (addressMode: AddressMode) => void;
 }
 
 interface AppStateProviderProps {
@@ -39,11 +43,14 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
 		mode: Mode.Edit,
 		error: '',
 		theme: isMatrix ? 'green' : 'white',
+		addressMode: AddressMode.Hex,
 	});
 
 	const setTheme = (theme: string) => setState(prev => ({...prev, theme}));
 	const setMode = (mode: Mode) => setState(prev => ({...prev, mode}));
 	const setError = (error: string) => setState(prev => ({...prev, error}));
+	const setAddressMode = (addressMode: AddressMode) =>
+		setState(prev => ({...prev, addressMode}));
 
 	return (
 		<AppStateContext.Provider
@@ -51,9 +58,11 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
 				mode: state.mode,
 				theme: state.theme,
 				error: state.error,
+				addressMode: state.addressMode,
 				setMode,
 				setTheme,
 				setError,
+				setAddressMode,
 			}}
 		>
 			{children}

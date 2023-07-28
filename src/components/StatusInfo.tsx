@@ -1,20 +1,39 @@
 import React from 'react';
-import {Box} from 'ink';
-import {toHex} from '../utils.js';
+import {Box, useInput} from 'ink';
+import {AddressMode, toDecimal, toHex} from '../utils.js';
 import {ColoredText} from './ColoredText.js';
 
 interface StatusInfoProps {
 	buffer: Uint8Array;
 	cursor: number;
+	addressMode: AddressMode;
+	setAddressMode: (addressMode: AddressMode) => void;
 }
 
-export const StatusInfo = ({buffer, cursor}: StatusInfoProps) => {
+export const StatusInfo = ({
+	buffer,
+	cursor,
+	addressMode,
+	setAddressMode,
+}: StatusInfoProps) => {
+	useInput(input => {
+		if (input === 'v') {
+			if (addressMode === AddressMode.Hex) {
+				setAddressMode(AddressMode.Decimal);
+			} else {
+				setAddressMode(AddressMode.Hex);
+			}
+		}
+	});
+
+	const formatFn = addressMode === AddressMode.Hex ? toHex : toDecimal;
+
 	return (
 		<Box justifyContent="space-between">
 			<Box>
 				<Box>
 					<ColoredText>
-						Offset [<ColoredText bold>{toHex(cursor, 8)}</ColoredText>]
+						Offset [<ColoredText bold>{formatFn(cursor, 8)}</ColoredText>]
 					</ColoredText>
 				</Box>
 				<ColoredText>

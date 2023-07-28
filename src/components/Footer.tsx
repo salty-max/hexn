@@ -4,7 +4,7 @@ import {SaveDialog} from './SaveDialog.js';
 import {StatusInfo} from './StatusInfo.js';
 import React from 'react';
 import {JumpDialog} from './JumpDialog.js';
-import {SCREEN_W} from '../utils.js';
+import {AddressMode, SCREEN_W} from '../utils.js';
 import {ThemeDialog} from './ThemeDialog.js';
 import {ErrorDialog} from './ErrorDialog.js';
 
@@ -15,9 +15,11 @@ interface FooterProps {
 	cursor: number;
 	error: string;
 	theme: string;
+	addressMode: AddressMode;
 	setError: (error: string) => void;
 	setMode: (mode: Mode) => void;
 	setTheme: (theme: string) => void;
+	setAddressMode: (addressMode: AddressMode) => void;
 	jumpToOffset: (offset: number) => void;
 }
 
@@ -28,9 +30,11 @@ export const Footer = ({
 	outputPath,
 	theme,
 	error,
+	addressMode,
 	setError,
 	setMode,
 	setTheme,
+	setAddressMode,
 	jumpToOffset,
 }: FooterProps) => (
 	<Box
@@ -41,7 +45,12 @@ export const Footer = ({
 		paddingX={1}
 	>
 		{mode === Mode.Edit ? (
-			<StatusInfo buffer={buffer} cursor={cursor} />
+			<StatusInfo
+				buffer={buffer}
+				cursor={cursor}
+				addressMode={addressMode}
+				setAddressMode={setAddressMode}
+			/>
 		) : mode === Mode.Jump ? (
 			<JumpDialog setMode={setMode} JumpToOffset={jumpToOffset} />
 		) : mode === Mode.Theme ? (
