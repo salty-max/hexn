@@ -7,7 +7,7 @@ interface OffsetProps {
 }
 
 export const Offset = ({offset}: OffsetProps) => (
-	<Box>
+	<Box marginRight={2}>
 		<Text bold>{toHex(offset, 8)}</Text>
 	</Box>
 );

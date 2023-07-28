@@ -5,12 +5,12 @@ import {Byte, Bytes} from './Byte.js';
 import chalk from 'chalk';
 
 test('renders an unselected byte correctly', t => {
-	const {lastFrame} = render(<Byte byte={0xca} />);
+	const {lastFrame} = render(<Byte byte={0xca} index={0} />);
 	t.is(lastFrame(), chalk.bgBlack(chalk.white('ca')));
 });
 
 test('renders a selected byte correctly', t => {
-	const {lastFrame} = render(<Byte byte={0xca} isSelected />);
+	const {lastFrame} = render(<Byte byte={0xca} index={0} isSelected />);
 	t.is(lastFrame(), chalk.bgWhite(chalk.black('ca')));
 });
 
@@ -18,10 +18,10 @@ test('renders a row of bytes correctly', t => {
 	const {lastFrame} = render(
 		<Bytes
 			bytes={[
-				<Byte key={0} byte={0xca} />,
-				<Byte key={1} byte={0xfe} isSelected />,
-				<Byte key={2} byte={0xc0} />,
-				<Byte key={3} byte={0xde} />,
+				<Byte key={0} byte={0xca} index={0} />,
+				<Byte key={1} byte={0xfe} index={1} isSelected />,
+				<Byte key={2} byte={0xc0} index={2} />,
+				<Byte key={3} byte={0xde} index={3} />,
 			]}
 		/>,
 	);

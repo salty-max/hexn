@@ -1,6 +1,6 @@
 import {Box, Text} from 'ink';
 import React from 'react';
-import {BYTES_PER_LINE, HEXVIEW_H, HEXVIEW_W} from '../utils.js';
+import {BYTES_PER_LINE, HEXVIEW_H} from '../utils.js';
 import {Byte, Bytes} from './Byte.js';
 import {Offset} from './Offset.js';
 import {Ascii} from './Ascii.js';
@@ -21,28 +21,29 @@ const HexView = ({buffer, cursor, offset: startOffset}: HexViewProps) => {
 		}
 		const bytes = slice.map((byte, i) => {
 			return (
-				<Byte key={offset + i} byte={byte} isSelected={offset + i === cursor} />
+				<Byte
+					key={offset + i}
+					byte={byte}
+					index={i}
+					isSelected={offset + i === cursor}
+				/>
 			);
 		});
 
 		if (bytes.length < BYTES_PER_LINE) {
-			const missing = BYTES_PER_LINE - bytes.length;
-			for (let i = 0; i < missing; i++) {
-				bytes.push(
-					<Box key={`padding-${i}`}>
-						<Text>{'  '}</Text>
-					</Box>,
-				);
-			}
+			const wordSpaces = 4 - Math.floor(bytes.length / 4);
+			const diff = BYTES_PER_LINE - bytes.length;
+			const padding = (
+				<Text key="padding">
+					{'   '.repeat(diff)}
+					{' '.repeat(wordSpaces)}
+				</Text>
+			);
+			bytes.push(padding);
 		}
 
 		lines.push(
-			<Box
-				key={offset}
-				columnGap={2}
-				width={HEXVIEW_W}
-				justifyContent="space-between"
-			>
+			<Box key={offset}>
 				<Offset offset={offset} />
 				<Bytes bytes={bytes} />
 				<Ascii bytes={slice} />

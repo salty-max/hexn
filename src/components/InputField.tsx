@@ -47,7 +47,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 
 		if (key.return) return onEnter(value);
 
-		if (input === '') {
+		if (input !== '') {
 			const part1 = value.slice(0, cursor);
 			const part2 = value.slice(cursor);
 			const newValue = part1 + input + part2;
