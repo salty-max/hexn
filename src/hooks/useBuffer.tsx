@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {BYTES_PER_LINE, HEXVIEW_H} from '../utils.js';
 
 export interface CursorCommands {
@@ -9,18 +9,35 @@ export interface CursorCommands {
 }
 
 export interface BufferCommands {
+	updateAtCursor: (byte: number) => void;
 	insertAtCursor: (bytes: Uint8Array) => void;
 	insertAfterCursor: (bytes: Uint8Array) => void;
 	delete: () => void;
 }
 
 export const useBuffer = () => {
-	const [buffer, setBuffer] = useState(new Uint8Array(0));
+	const bufferRef = useRef<Uint8Array>();
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [_, forceRender] = useState({});
+	if (!bufferRef.current) {
+		bufferRef.current = new Uint8Array(0);
+	}
+
+	const buffer = bufferRef.current;
+	const setBuffer = (newBuffer: Uint8Array) => {
+		bufferRef.current = newBuffer;
+		forceRender({});
+	};
 	const [cursor, setCursor] = useState(0);
 	const [offset, setOffset] = useState(0);
 
 	const isCursorVisible = (cursor: number, offset: number) => {
 		return cursor >= offset && cursor < offset + HEXVIEW_H * BYTES_PER_LINE;
+	};
+
+	const updateAtCursor = (byte: number) => {
+		buffer[cursor] = byte;
+		setBuffer(buffer);
 	};
 
 	const insertAtCursor = (bytes: Uint8Array) => {
@@ -118,6 +135,7 @@ export const useBuffer = () => {
 	};
 
 	const bufferCommands: BufferCommands = {
+		updateAtCursor,
 		insertAtCursor,
 		insertAfterCursor,
 		delete: deleteBytes,

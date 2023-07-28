@@ -27,5 +27,6 @@ module.exports = {
 	plugins: ['@typescript-eslint', 'react'],
 	rules: {
 		'react/prop-types': 'off',
+		'@typescript-eslint/no-unused-vars': ['error', {argsIgnorePattern: '^_'}],
 	},
 };
