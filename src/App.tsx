@@ -8,6 +8,7 @@ import {useMovement} from './hooks/useMovement.js';
 import {useEdit} from './hooks/useEdit.js';
 import {Mode, useAppState} from './hooks/useAppState.js';
 import {Footer} from './components/Footer.js';
+import {HelpScreen} from './components/HelpScreen.js';
 
 interface AppProps {
 	filePath?: string;
@@ -20,8 +21,15 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 
 	const {mode, setMode} = useAppState();
 
-	const {buffer, setBuffer, cursor, offset, cursorCommands, bufferCommands} =
-		useBuffer();
+	const {
+		buffer,
+		setBuffer,
+		cursor,
+		offset,
+		cursorCommands,
+		bufferCommands,
+		jumpToOffset,
+	} = useBuffer();
 
 	const getFile = async () => {
 		const file = await fs.readFile(
@@ -45,15 +53,18 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 		isEnabled: mode === Mode.Edit,
 	});
 
-	return (
+	return mode === Mode.Help ? (
+		<HelpScreen exit={() => setMode(Mode.Edit)} />
+	) : (
 		<Box flexDirection="column">
 			<HexView buffer={buffer} cursor={cursor} offset={offset} />
 			<Footer
 				mode={mode}
-				setMode={setMode}
 				outputPath={filePath}
 				buffer={buffer}
 				cursor={cursor}
+				setMode={setMode}
+				jumpToOffset={jumpToOffset}
 			/>
 		</Box>
 	);

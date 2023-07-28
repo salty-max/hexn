@@ -54,6 +54,14 @@ export const useEdit = ({
 				setIsMSN(true);
 			}
 
+			if (input === '?') {
+				return setMode(Mode.Help);
+			}
+
+			if (input === 'j') {
+				return setMode(Mode.Jump);
+			}
+
 			if (key.delete || key.backspace) {
 				bufferCommands.delete();
 				setIsMSN(true);

@@ -64,6 +64,13 @@ export const useBuffer = () => {
 		setCursor(Math.max(0, Math.min(newSize - 1, cursor)));
 	};
 
+	const jumpToOffset = (offset: number) => {
+		if (offset < 0 || !Number.isInteger(offset) || buffer.byteLength === 0)
+			return;
+		setOffset(Math.min(buffer.byteLength - 1, offset) & 0xfffffff0);
+		setCursor(Math.min(buffer.byteLength - 1, offset));
+	};
+
 	const cursorCommands: CursorCommands = {
 		left: () => {
 			if (buffer.byteLength === 0) return;
@@ -125,5 +132,6 @@ export const useBuffer = () => {
 		setOffset,
 		cursorCommands,
 		bufferCommands,
+		jumpToOffset,
 	};
 };

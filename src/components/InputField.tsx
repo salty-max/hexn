@@ -7,6 +7,7 @@ interface InputFieldProps {
 	onEscape?: (value: string) => void | Promise<void>;
 	initialValue?: string;
 	label?: string;
+	mask?: RegExp;
 }
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -15,6 +16,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 	onEnter = () => void 0,
 	onChange = () => void 0,
 	onEscape = () => void 0,
+	mask,
 }: InputFieldProps) => {
 	const [value, setValue] = React.useState(initialValue);
 	const [cursor, setCursor] = React.useState(initialValue.length);
@@ -31,6 +33,9 @@ export const InputField: React.FC<InputFieldProps> = ({
 			const part1 = value.slice(0, cursor - 1);
 			const part2 = value.slice(cursor);
 			const newValue = part1 + part2;
+
+			if (mask && !mask.test(newValue)) return;
+
 			setValue(newValue);
 			setCursor(cursor - 1);
 			onChange(newValue);
@@ -51,6 +56,9 @@ export const InputField: React.FC<InputFieldProps> = ({
 			const part1 = value.slice(0, cursor);
 			const part2 = value.slice(cursor);
 			const newValue = part1 + input + part2;
+
+			if (mask && !mask.test(newValue)) return;
+
 			setValue(newValue);
 			setCursor(cursor + input.length);
 			onChange(newValue);

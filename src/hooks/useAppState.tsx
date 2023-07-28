@@ -3,6 +3,8 @@ import React from 'react';
 export enum Mode {
 	Edit,
 	Save,
+	Help,
+	Jump,
 }
 
 interface AppState {

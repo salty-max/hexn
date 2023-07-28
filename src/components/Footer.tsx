@@ -4,13 +4,15 @@ import {SaveDialog} from './SaveDialog.js';
 import {StatusInfo} from './StatusInfo.js';
 import React from 'react';
 import {SCREEN_W} from '../utils.js';
+import {JumpDialog} from './JumpDialog.js';
 
 interface FooterProps {
 	mode: Mode;
-	setMode: (mode: Mode) => void;
 	outputPath: string;
 	buffer: Uint8Array;
 	cursor: number;
+	setMode: (mode: Mode) => void;
+	jumpToOffset: (offset: number) => void;
 }
 
 export const Footer = ({
@@ -19,11 +21,14 @@ export const Footer = ({
 	cursor,
 	outputPath,
 	setMode,
+	jumpToOffset,
 }: FooterProps) => (
 	<Box flexDirection="column">
 		<Text>{'-'.repeat(SCREEN_W)}</Text>
 		{mode === Mode.Edit ? (
 			<StatusInfo buffer={buffer} cursor={cursor} />
+		) : mode === Mode.Jump ? (
+			<JumpDialog setMode={setMode} JumpToOffset={jumpToOffset} />
 		) : (
 			<SaveDialog buffer={buffer} outputPath={outputPath} setMode={setMode} />
 		)}
