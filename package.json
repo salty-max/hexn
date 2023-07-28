@@ -3,6 +3,9 @@
 	"version": "0.1.0",
 	"description": "A CLI to mess with bytes",
 	"main": "./bin/index.js",
+	"bin": {
+		"hexn": "./bin/index.js"
+	},
 	"repository": "git@github.com:salty-max/hexn.git",
 	"author": "Maxime Blanc <max@jellycat.fr>",
 	"license": "MIT",
@@ -18,7 +21,8 @@
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
 		"fmt": "prettier --write src",
-		"test": "ava src"
+		"test": "ava src",
+		"prepack": "npm run build"
 	},
 	"files": [
 		"dist"

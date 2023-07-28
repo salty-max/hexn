@@ -2,7 +2,8 @@
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
 		"outDir": "bin",
-		"jsx": "react"
+		"jsx": "react",
+		"sourceMap": false
 	},
 	"include": ["src"],
 	"exclude": ["node_modules", "bin", "**/*.spec.ts"]

@@ -1,0 +1,10 @@
+node_modules/
+src/generate-bin.ts
+example.bin
+.gitignore
+,eslintrc.js
+.gitattributes
+.git
+**/*.spec.tsx
+tsconfig.json
+
