@@ -20,7 +20,7 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 		return <Text color="red">No file path provided</Text>;
 	}
 
-	const {mode, setMode, theme, setTheme} = useAppState();
+	const {mode, setMode, theme, setTheme, error, setError} = useAppState();
 
 	const {
 		buffer,
@@ -65,8 +65,10 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 				buffer={buffer}
 				cursor={cursor}
 				mode={mode}
-				setMode={setMode}
 				theme={theme}
+				error={error}
+				setError={setError}
+				setMode={setMode}
 				setTheme={setTheme}
 				jumpToOffset={jumpToOffset}
 			/>

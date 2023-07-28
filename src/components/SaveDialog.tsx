@@ -7,10 +7,16 @@ import {InputField} from './InputField.js';
 interface SaveDialogProps {
 	buffer: Uint8Array;
 	setMode: (mode: Mode) => void;
+	setError: (error: string) => void;
 	outputPath: string;
 }
 
-export const SaveDialog = ({buffer, setMode, outputPath}: SaveDialogProps) => {
+export const SaveDialog = ({
+	buffer,
+	setMode,
+	outputPath,
+	setError,
+}: SaveDialogProps) => {
 	return (
 		<InputField
 			label="Save to: "
@@ -19,9 +25,9 @@ export const SaveDialog = ({buffer, setMode, outputPath}: SaveDialogProps) => {
 				try {
 					await fs.writeFile(path.resolve(filePath), buffer);
 					setMode(Mode.Edit);
-				} catch (error) {
-					console.error(error);
-					setMode(Mode.Edit);
+				} catch {
+					setError(`Could not save to ${filePath}`);
+					setMode(Mode.Error);
 				}
 			}}
 			onEscape={() => setMode(Mode.Edit)}

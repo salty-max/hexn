@@ -6,18 +6,22 @@ export enum Mode {
 	Help,
 	Jump,
 	Theme,
+	Error,
 }
 
 interface AppState {
 	mode: Mode;
+	error: string;
 	theme: string;
 }
 
 interface AppStateContextProps {
 	mode: Mode;
 	theme: string;
+	error: string;
 	setMode: (mode: Mode) => void;
 	setTheme: (theme: string) => void;
+	setError: (error: string) => void;
 }
 
 interface AppStateProviderProps {
@@ -33,19 +37,23 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({
 }) => {
 	const [state, setState] = React.useState<AppState>({
 		mode: Mode.Edit,
+		error: '',
 		theme: isMatrix ? 'green' : 'white',
 	});
 
 	const setTheme = (theme: string) => setState(prev => ({...prev, theme}));
 	const setMode = (mode: Mode) => setState(prev => ({...prev, mode}));
+	const setError = (error: string) => setState(prev => ({...prev, error}));
 
 	return (
 		<AppStateContext.Provider
 			value={{
 				mode: state.mode,
-				setMode,
 				theme: state.theme,
+				error: state.error,
+				setMode,
 				setTheme,
+				setError,
 			}}
 		>
 			{children}
