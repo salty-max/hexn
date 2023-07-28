@@ -14,7 +14,6 @@ enum CommandChar {
 interface ByteEditProps {
 	cursor: number;
 	buffer: Uint8Array;
-	setBuffer: (buffer: Uint8Array) => void;
 	bufferCommands: BufferCommands;
 	setMode: (mode: Mode) => void;
 	moveCursorRight: () => void;
@@ -24,7 +23,6 @@ interface ByteEditProps {
 export const useEdit = ({
 	cursor,
 	buffer,
-	setBuffer,
 	bufferCommands,
 	setMode,
 	moveCursorRight,
@@ -34,22 +32,20 @@ export const useEdit = ({
 
 	useEffect(() => {
 		setIsMSN(true);
-	}, [cursor]);
+	}, [cursor, buffer]);
 
 	useInput(
 		(input, key) => {
 			if (isHexChar(input)) {
 				const value = parseInt(input, 16);
-				const newBuffer = Uint8Array.from(buffer);
 
 				if (isMSN) {
-					newBuffer[cursor] = (value << 4) | (newBuffer[cursor]! & 0x0f);
+					buffer[cursor] = (value << 4) | (buffer[cursor]! & 0x0f);
 				} else {
-					newBuffer[cursor] = (newBuffer[cursor]! & 0xf0) | value;
+					buffer[cursor] = (buffer[cursor]! & 0xf0) | value;
 					moveCursorRight();
 				}
 
-				setBuffer(newBuffer);
 				setIsMSN(!isMSN);
 				return;
 			}
@@ -74,12 +70,10 @@ export const useEdit = ({
 			switch (input) {
 				case CommandChar.InsertByteAtCursor:
 					bufferCommands.insertAtCursor(new Uint8Array([0]));
-					setIsMSN(true);
 					return;
 				case CommandChar.InsertByteAfterCursor:
 					bufferCommands.insertAfterCursor(new Uint8Array([0]));
 					moveCursorRight();
-					setIsMSN(true);
 					return;
 			}
 

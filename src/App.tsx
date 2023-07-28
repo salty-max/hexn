@@ -22,15 +22,8 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 
 	const {mode, setMode, theme, setTheme, error, setError} = useAppState();
 
-	const {
-		buffer,
-		setBuffer,
-		cursor,
-		offset,
-		cursorCommands,
-		bufferCommands,
-		jumpToOffset,
-	} = useBuffer();
+	const {buffer, cursor, offset, cursorCommands, bufferCommands, jumpToOffset} =
+		useBuffer();
 
 	const getFile = async () => {
 		const file = await fs.readFile(
@@ -47,7 +40,6 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 	useEdit({
 		buffer,
 		cursor,
-		setBuffer,
 		bufferCommands,
 		setMode: setMode,
 		moveCursorRight: cursorCommands.right,
