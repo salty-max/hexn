@@ -14,13 +14,16 @@
 		"node": ">=16"
 	},
 	"scripts": {
-		"build": "tsc && chmod +x ./bin/index.js",
+		"prebuild": "yarn clean",
+		"build": "tsc",
+		"postbuild": "node ./scripts/add-shebang.js && chmod +x ./bin/index.js",
 		"dev": "tsc --watch",
 		"hexn": "node bin --file example.bin",
 		"gen": "node bin/generate-bin.js 512 example.bin",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
 		"fmt": "prettier --write src",
+		"clean": "rimraf bin",
 		"prepack": "npm run build"
 	},
 	"files": [
@@ -44,8 +47,10 @@
 		"eslint-config-xo-react": "^0.27.0",
 		"eslint-plugin-react": "^7.33.0",
 		"eslint-plugin-react-hooks": "^4.6.0",
+		"fs-extra": "^11.1.1",
 		"ink-testing-library": "^3.0.0",
 		"prettier": "^2.8.7",
+		"rimraf": "^5.0.1",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.3"
 	},
