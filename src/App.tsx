@@ -18,13 +18,14 @@ const App = ({filePath}: AppProps) => {
 		return <Text color="red">No file path provided</Text>;
 	}
 
-	const {buffer, setBuffer, cursor, offset, cursorCommands} = useBuffer();
+	const {buffer, setBuffer, cursor, offset, cursorCommands, bufferCommands} =
+		useBuffer();
 
 	const getFile = async () => {
 		const file = await fs.readFile(
 			path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath),
 		);
-		setBuffer(new Uint8Array(file.buffer));
+		bufferCommands.insertAtCursor(new Uint8Array(file.buffer));
 	};
 
 	useEffect(() => {
@@ -36,6 +37,7 @@ const App = ({filePath}: AppProps) => {
 		buffer,
 		cursor,
 		setBuffer,
+		bufferCommands,
 		moveCursorRight: cursorCommands.right,
 		isEnabled: true,
 	});
