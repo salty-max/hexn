@@ -27,7 +27,7 @@
 		"prepack": "npm run build"
 	},
 	"files": [
-		"dist"
+		"bin"
 	],
 	"dependencies": {
 		"ink": "^4.1.0",
