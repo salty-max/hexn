@@ -3,6 +3,7 @@ import React from 'react';
 import {render} from 'ink';
 import meow from 'meow';
 import App from './App.js';
+import {AppStateProvider} from './hooks/useAppState.js';
 
 const cli = meow(
 	`
@@ -25,4 +26,8 @@ const cli = meow(
 	},
 );
 
-render(<App filePath={cli.flags.file} />);
+render(
+	<AppStateProvider>
+		<App filePath={cli.flags.file} />
+	</AppStateProvider>,
+);

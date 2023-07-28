@@ -1,22 +1,24 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Box, Text} from 'ink';
 import fs from 'fs/promises';
 import path from 'path';
 import HexView from './components/HexView.js';
 import {useBuffer} from './hooks/useBuffer.js';
 import {useMovement} from './hooks/useMovement.js';
-import {useByteEdit} from './hooks/useByteEdit.js';
-import {useSave} from './hooks/useSave.js';
-import {StatusInfo} from './components/StatusInfo.js';
+import {useEdit} from './hooks/useEdit.js';
+import {Mode, useAppState} from './hooks/useAppState.js';
+import {Footer} from './components/Footer.js';
 
 interface AppProps {
 	filePath?: string;
 }
 
-const App = ({filePath}: AppProps) => {
+const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 	if (!filePath) {
 		return <Text color="red">No file path provided</Text>;
 	}
+
+	const {mode, setMode} = useAppState();
 
 	const {buffer, setBuffer, cursor, offset, cursorCommands, bufferCommands} =
 		useBuffer();
@@ -28,25 +30,31 @@ const App = ({filePath}: AppProps) => {
 		bufferCommands.insertAtCursor(new Uint8Array(file.buffer));
 	};
 
-	useEffect(() => {
+	React.useEffect(() => {
 		getFile();
 	}, []);
 
-	useMovement({cursorCommands, isEnabled: true});
-	useByteEdit({
+	useMovement({cursorCommands, isEnabled: mode === Mode.Edit});
+	useEdit({
 		buffer,
 		cursor,
 		setBuffer,
 		bufferCommands,
+		setMode: setMode,
 		moveCursorRight: cursorCommands.right,
-		isEnabled: true,
+		isEnabled: mode === Mode.Edit,
 	});
-	useSave({buffer, outputPath: filePath, isEnabled: true});
 
 	return (
 		<Box flexDirection="column">
 			<HexView buffer={buffer} cursor={cursor} offset={offset} />
-			<StatusInfo buffer={buffer} cursor={cursor} />
+			<Footer
+				mode={mode}
+				setMode={setMode}
+				outputPath={filePath}
+				buffer={buffer}
+				cursor={cursor}
+			/>
 		</Box>
 	);
 };
