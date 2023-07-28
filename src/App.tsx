@@ -19,8 +19,9 @@ const App = ({filePath}: AppProps) => {
 	const {buffer, setBuffer, cursor, setCursor} = useBuffer();
 
 	const getFile = async () => {
-		// TODO: handle absolute paths
-		const file = await fs.readFile(path.join(process.cwd(), filePath));
+		const file = await fs.readFile(
+			path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath),
+		);
 		setBuffer(new Uint8Array(file.buffer));
 	};
 
