@@ -20,7 +20,7 @@ export const Header = ({filepath}: HeaderProps) => {
 			justifyContent="space-between"
 		>
 			<ColoredText>
-				<ColoredText bold>Hexn</ColoredText> v0.1.0
+				<ColoredText bold>Hexn</ColoredText> v0.3.0
 			</ColoredText>
 			<ColoredText>{filepath}</ColoredText>
 		</Box>

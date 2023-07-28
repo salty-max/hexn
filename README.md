@@ -23,3 +23,9 @@ $ hexn --help
   Examples
     $ hexn --file=./example.bin
 ```
+
+## Changelog
+
+### 0.3.0
+- Added error handling (currently just on save)
+- Buffer management changes to improve performance
