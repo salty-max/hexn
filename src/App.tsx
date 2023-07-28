@@ -18,7 +18,7 @@ const App = ({filePath}: AppProps) => {
 		return <Text color="red">No file path provided</Text>;
 	}
 
-	const {buffer, setBuffer, cursor, cursorCommands} = useBuffer();
+	const {buffer, setBuffer, cursor, offset, cursorCommands} = useBuffer();
 
 	const getFile = async () => {
 		const file = await fs.readFile(
@@ -43,7 +43,7 @@ const App = ({filePath}: AppProps) => {
 
 	return (
 		<Box flexDirection="column">
-			<HexView buffer={buffer} cursor={cursor} />
+			<HexView buffer={buffer} cursor={cursor} offset={offset} />
 			<StatusInfo buffer={buffer} cursor={cursor} />
 		</Box>
 	);
