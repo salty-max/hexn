@@ -6,6 +6,7 @@ import HexView from './components/HexView.js';
 import {useBuffer} from './hooks/useBuffer.js';
 import {useMovement} from './hooks/useMovement.js';
 import {useByteEdit} from './hooks/useByteEdit.js';
+import {useSave} from './hooks/useSave.js';
 
 interface AppProps {
 	filePath?: string;
@@ -30,8 +31,8 @@ const App = ({filePath}: AppProps) => {
 	}, []);
 
 	useMovement({buffer, cursor, setCursor, isEnabled: true});
-
 	useByteEdit({buffer, cursor, setBuffer, isEnabled: true});
+	useSave({buffer, outputPath: filePath, isEnabled: true});
 
 	return (
 		<Box flexDirection="column">
