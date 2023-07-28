@@ -1,5 +1,5 @@
 import {useInput} from 'ink';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {BufferCommands} from './useBuffer.js';
 import {Mode} from './useAppState.js';
 
@@ -32,6 +32,10 @@ export const useEdit = ({
 }: ByteEditProps) => {
 	const [isMSN, setIsMSN] = useState(true); // Most Significant Nibble
 
+	useEffect(() => {
+		setIsMSN(true);
+	}, [cursor]);
+
 	useInput(
 		(input, key) => {
 			if (isHexChar(input)) {
@@ -50,10 +54,6 @@ export const useEdit = ({
 				return;
 			}
 
-			if (key.leftArrow || key.rightArrow || key.upArrow || key.downArrow) {
-				setIsMSN(true);
-			}
-
 			if (input === '?') {
 				return setMode(Mode.Help);
 			}
@@ -68,7 +68,6 @@ export const useEdit = ({
 
 			if (key.delete || key.backspace) {
 				bufferCommands.delete();
-				setIsMSN(true);
 				return;
 			}
 
