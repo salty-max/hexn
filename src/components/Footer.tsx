@@ -5,7 +5,6 @@ import {StatusInfo} from './StatusInfo.js';
 import React from 'react';
 import {JumpDialog} from './JumpDialog.js';
 import {AddressMode, SCREEN_W} from '../utils.js';
-import {ThemeDialog} from './ThemeDialog.js';
 import {ErrorDialog} from './ErrorDialog.js';
 import {SearchDialog} from './SearchDialog.js';
 
@@ -19,7 +18,6 @@ interface FooterProps {
 	addressMode: AddressMode;
 	setError: (error: string) => void;
 	setMode: (mode: Mode) => void;
-	setTheme: (theme: string) => void;
 	setAddressMode: (addressMode: AddressMode) => void;
 	jumpToOffset: (offset: number) => void;
 	searchForSequence: (sequence: Uint8Array) => boolean;
@@ -35,7 +33,6 @@ export const Footer = ({
 	addressMode,
 	setError,
 	setMode,
-	setTheme,
 	setAddressMode,
 	jumpToOffset,
 	searchForSequence,
@@ -58,8 +55,6 @@ export const Footer = ({
 			<JumpDialog setMode={setMode} JumpToOffset={jumpToOffset} />
 		) : mode === Mode.Search ? (
 			<SearchDialog setMode={setMode} searchForSequence={searchForSequence} />
-		) : mode === Mode.Theme ? (
-			<ThemeDialog setMode={setMode} theme={theme} setTheme={setTheme} />
 		) : mode === Mode.Error ? (
 			<ErrorDialog error={error} setMode={setMode} />
 		) : (

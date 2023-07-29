@@ -32,3 +32,5 @@ $ hexn --help
 ### 0.4.0
 - Adds search functionality
 - Highlights ascii character corresponding to cursor
+### 0.5.0
+- Theme can now be selected in a more intuitive way

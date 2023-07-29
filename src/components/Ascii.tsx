@@ -19,7 +19,7 @@ export const Ascii = ({bytes, offset, cursor, theme}: AsciiProps) => {
 
 				if (offset + i === cursor) {
 					return (
-						<Text key={i} backgroundColor={theme} color="black" bold>
+						<Text key={i} backgroundColor={theme} color="black">
 							{char}
 						</Text>
 					);

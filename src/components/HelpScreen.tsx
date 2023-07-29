@@ -26,7 +26,7 @@ export const HelpScreen = ({exit, theme}: HelpScreenProps) => {
 			'Switch the address display in the status line between hex and decimal',
 		],
 		['Ctrl + s', 'Save file'],
-		['t', 'Change theme (blue, red, green, yellow, magenta, cyan, white)'],
+		['t', 'Change color theme'],
 		['Esc', 'Exit any mode'],
 		['?', 'Show help'],
 	];
@@ -43,12 +43,12 @@ export const HelpScreen = ({exit, theme}: HelpScreenProps) => {
 		>
 			<Box marginBottom={2}>
 				<ColoredText>
-					<ColoredText bold>Hexn</ColoredText> v0.3.0 :: Help
+					<ColoredText bold>Hexn</ColoredText> v0.5.0 :: Help
 				</ColoredText>
 			</Box>
 
 			{helpItems.map(([key, description]) => (
-				<Box key={key} marginBottom={0.25}>
+				<Box key={key}>
 					<Box minWidth={30}>
 						<ColoredText bold>{key}</ColoredText>
 					</Box>

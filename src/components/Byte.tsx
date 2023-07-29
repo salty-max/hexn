@@ -16,7 +16,6 @@ export const Byte = ({byte, index, isSelected, theme}: ByteProps) => {
 			<Text
 				backgroundColor={isSelected ? theme : 'black'}
 				color={isSelected ? 'black' : theme}
-				bold={isSelected}
 			>
 				{toHex(byte, 2)}
 			</Text>

@@ -10,6 +10,7 @@ import {Mode, useAppState} from './hooks/useAppState.js';
 import {Footer} from './components/Footer.js';
 import {HelpScreen} from './components/HelpScreen.js';
 import {Header} from './components/Header.js';
+import {ThemeScreen} from './components/ThemeScreen.js';
 
 interface AppProps {
 	filePath?: string;
@@ -64,6 +65,12 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 
 	return mode === Mode.Help ? (
 		<HelpScreen theme={theme} exit={() => setMode(Mode.Edit)} />
+	) : mode === Mode.Theme ? (
+		<ThemeScreen
+			theme={theme}
+			setTheme={setTheme}
+			exit={() => setMode(Mode.Edit)}
+		/>
 	) : (
 		<Box flexDirection="column">
 			<Header theme={theme} filepath={filePath} />
@@ -78,7 +85,6 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 				addressMode={addressMode}
 				setError={setError}
 				setMode={setMode}
-				setTheme={setTheme}
 				setAddressMode={setAddressMode}
 				jumpToOffset={jumpToOffset}
 				searchForSequence={searchCommands.searchForSequence}
