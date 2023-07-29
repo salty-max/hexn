@@ -6,6 +6,7 @@ export enum Mode {
 	Save,
 	Help,
 	Jump,
+	Search,
 	Theme,
 	Error,
 }

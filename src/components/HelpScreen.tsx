@@ -17,6 +17,7 @@ export const HelpScreen = ({exit, theme}: HelpScreenProps) => {
 		['←↑↓→', 'Move cursor'],
 		['[a-f0-9]', 'Edit the byte at cursor'],
 		['Del/Backspace', 'Delete the byte at cursor'],
+		['/', 'Search for a byte sequence'],
 		['i', 'Insert a zero byte before the cursor'],
 		['I', 'Insert a zero byte after the cursor'],
 		['j', 'Jump to specified offset'],

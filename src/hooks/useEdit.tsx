@@ -64,6 +64,10 @@ export const useEdit = ({
 				return setMode(Mode.Theme);
 			}
 
+			if (input === '/') {
+				return setMode(Mode.Search);
+			}
+
 			if (key.delete || key.backspace) {
 				bufferCommands.delete();
 				return;

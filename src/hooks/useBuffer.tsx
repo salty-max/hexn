@@ -15,6 +15,10 @@ export interface BufferCommands {
 	delete: () => void;
 }
 
+export interface SearchCommands {
+	searchForSequence: (search: Uint8Array) => boolean;
+}
+
 export const useBuffer = () => {
 	const bufferRef = useRef<Uint8Array>();
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -81,6 +85,25 @@ export const useBuffer = () => {
 		setCursor(Math.max(0, Math.min(newSize - 1, cursor)));
 	};
 
+	const searchForSequence = (search: Uint8Array) => {
+		for (let bi = 0; bi < buffer.byteLength; bi++) {
+			let found = true;
+			for (let si = 0; si < search.byteLength; si++) {
+				if (buffer[bi + si] !== search[si]) {
+					found = false;
+					break;
+				}
+			}
+
+			if (found) {
+				jumpToOffset(bi);
+				return true;
+			}
+		}
+
+		return false;
+	};
+
 	const jumpToOffset = (offset: number) => {
 		if (offset < 0 || !Number.isInteger(offset) || buffer.byteLength === 0)
 			return;
@@ -141,6 +164,10 @@ export const useBuffer = () => {
 		delete: deleteBytes,
 	};
 
+	const searchCommands: SearchCommands = {
+		searchForSequence,
+	};
+
 	return {
 		buffer,
 		setBuffer,
@@ -150,6 +177,7 @@ export const useBuffer = () => {
 		setOffset,
 		cursorCommands,
 		bufferCommands,
+		searchCommands,
 		jumpToOffset,
 	};
 };

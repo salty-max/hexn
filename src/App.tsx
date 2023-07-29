@@ -31,8 +31,15 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 		setAddressMode,
 	} = useAppState();
 
-	const {buffer, cursor, offset, cursorCommands, bufferCommands, jumpToOffset} =
-		useBuffer();
+	const {
+		buffer,
+		cursor,
+		offset,
+		cursorCommands,
+		bufferCommands,
+		searchCommands,
+		jumpToOffset,
+	} = useBuffer();
 
 	const getFile = async () => {
 		const file = await fs.readFile(
@@ -74,6 +81,7 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 				setTheme={setTheme}
 				setAddressMode={setAddressMode}
 				jumpToOffset={jumpToOffset}
+				searchForSequence={searchCommands.searchForSequence}
 			/>
 		</Box>
 	);

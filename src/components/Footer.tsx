@@ -7,6 +7,7 @@ import {JumpDialog} from './JumpDialog.js';
 import {AddressMode, SCREEN_W} from '../utils.js';
 import {ThemeDialog} from './ThemeDialog.js';
 import {ErrorDialog} from './ErrorDialog.js';
+import {SearchDialog} from './SearchDialog.js';
 
 interface FooterProps {
 	mode: Mode;
@@ -21,6 +22,7 @@ interface FooterProps {
 	setTheme: (theme: string) => void;
 	setAddressMode: (addressMode: AddressMode) => void;
 	jumpToOffset: (offset: number) => void;
+	searchForSequence: (sequence: Uint8Array) => boolean;
 }
 
 export const Footer = ({
@@ -36,6 +38,7 @@ export const Footer = ({
 	setTheme,
 	setAddressMode,
 	jumpToOffset,
+	searchForSequence,
 }: FooterProps) => (
 	<Box
 		flexDirection="column"
@@ -53,6 +56,8 @@ export const Footer = ({
 			/>
 		) : mode === Mode.Jump ? (
 			<JumpDialog setMode={setMode} JumpToOffset={jumpToOffset} />
+		) : mode === Mode.Search ? (
+			<SearchDialog setMode={setMode} searchForSequence={searchForSequence} />
 		) : mode === Mode.Theme ? (
 			<ThemeDialog setMode={setMode} theme={theme} setTheme={setTheme} />
 		) : mode === Mode.Error ? (
