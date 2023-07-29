@@ -29,3 +29,6 @@ $ hexn --help
 ### 0.3.0
 - Added error handling (currently just on save)
 - Buffer management changes to improve performance
+### 0.4.0
+- Adds search functionality
+- Highlights ascii character corresponding to cursor
