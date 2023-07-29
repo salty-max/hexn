@@ -1,15 +1,14 @@
 import React from 'react';
 import {Box, useInput} from 'ink';
 import {SCREEN_H, SCREEN_W} from '../utils.js';
-import {useAppState} from '../hooks/useAppState.js';
 import {ColoredText} from './ColoredText.js';
 
 interface HelpScreenProps {
 	exit: () => void;
+	theme: string;
 }
 
-export const HelpScreen = ({exit}: HelpScreenProps) => {
-	const {theme} = useAppState();
+export const HelpScreen = ({exit, theme}: HelpScreenProps) => {
 	useInput((_, key) => {
 		if (key.escape) exit();
 	});

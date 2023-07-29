@@ -56,11 +56,11 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 	});
 
 	return mode === Mode.Help ? (
-		<HelpScreen exit={() => setMode(Mode.Edit)} />
+		<HelpScreen theme={theme} exit={() => setMode(Mode.Edit)} />
 	) : (
 		<Box flexDirection="column">
-			<Header filepath={filePath} />
-			<HexView buffer={buffer} cursor={cursor} offset={offset} />
+			<Header theme={theme} filepath={filePath} />
+			<HexView buffer={buffer} cursor={cursor} offset={offset} theme={theme} />
 			<Footer
 				outputPath={filePath}
 				buffer={buffer}

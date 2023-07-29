@@ -1,15 +1,14 @@
 import React from 'react';
 import {Box} from 'ink';
 import {SCREEN_W} from '../utils.js';
-import {useAppState} from '../hooks/useAppState.js';
 import {ColoredText} from './ColoredText.js';
 
 interface HeaderProps {
 	filepath: string;
+	theme: string;
 }
 
-export const Header = ({filepath}: HeaderProps) => {
-	const {theme} = useAppState();
+export const Header = ({filepath, theme}: HeaderProps) => {
 	return (
 		<Box
 			borderStyle="round"

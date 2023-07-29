@@ -9,9 +9,15 @@ interface HexViewProps {
 	buffer: Uint8Array;
 	cursor: number;
 	offset: number;
+	theme: string;
 }
 
-const HexView = ({buffer, cursor, offset: startOffset}: HexViewProps) => {
+const HexView = ({
+	buffer,
+	cursor,
+	offset: startOffset,
+	theme,
+}: HexViewProps) => {
 	const lines: React.JSX.Element[] = [];
 	for (let line = 0; line < HEXVIEW_H; line++) {
 		const offset = startOffset + line * BYTES_PER_LINE;
@@ -26,6 +32,7 @@ const HexView = ({buffer, cursor, offset: startOffset}: HexViewProps) => {
 					byte={byte}
 					index={i}
 					isSelected={offset + i === cursor}
+					theme={theme}
 				/>
 			);
 		});
@@ -46,7 +53,7 @@ const HexView = ({buffer, cursor, offset: startOffset}: HexViewProps) => {
 			<Box key={offset}>
 				<Offset offset={offset} />
 				<Bytes bytes={bytes} />
-				<Ascii bytes={slice} />
+				<Ascii bytes={slice} cursor={cursor} offset={offset} theme={theme} />
 			</Box>,
 		);
 	}
