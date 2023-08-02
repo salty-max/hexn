@@ -34,3 +34,8 @@ $ hexn --help
 - Highlights ascii character corresponding to cursor
 ### 0.5.0
 - Theme can now be selected in a more intuitive way
+### 0.6.0
+- CLI now has new commands!
+  - [hex | h] Converts a number to base 16
+  - [dec | d] Converts a number to base 10
+  - [bin | b] Converts a number to base 2
