@@ -11,6 +11,7 @@ import {Footer} from './components/Footer.js';
 import {HelpScreen} from './components/HelpScreen.js';
 import {Header} from './components/Header.js';
 import {ThemeScreen} from './components/ThemeScreen.js';
+import chalk from 'chalk';
 
 interface AppProps {
 	filePath?: string;
@@ -50,6 +51,7 @@ const App: React.FC<AppProps> = ({filePath}: AppProps) => {
 	};
 
 	React.useEffect(() => {
+		console.log(chalk.yellow(filePath));
 		getFile();
 	}, []);
 

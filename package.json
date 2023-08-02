@@ -18,7 +18,7 @@
 		"build": "tsc",
 		"postbuild": "node ./scripts/add-shebang.js && chmod +x ./bin/index.js",
 		"dev": "tsc --watch",
-		"hexn": "node bin --file example.bin",
+		"hexn": "node bin",
 		"gen": "node bin/generate-bin.js 512 example.bin",
 		"lint": "eslint src",
 		"lint:fix": "eslint src --fix",
@@ -30,12 +30,13 @@
 		"bin"
 	],
 	"dependencies": {
+		"commander": "^11.0.0",
 		"ink": "^4.1.0",
-		"meow": "^11.0.0",
 		"react": "^18.2.0"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^3.0.1",
+		"@types/commander": "^2.12.2",
 		"@types/node": "^20.4.5",
 		"@types/react": "^18.0.32",
 		"@types/sinon": "^10.0.15",
